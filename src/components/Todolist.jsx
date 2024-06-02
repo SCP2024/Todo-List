@@ -15,13 +15,14 @@ function TodoList() {
   useEffect(() => {
     localStorage.setItem("ITEM", JSON.stringify(todos));
   }, [todos]);
-  //上面的代码实现了将 Todo List 保存在本地 JSON 文件中以实现项目重启后可以保留上次状态
-  const [input, setInput] = useState('');
-  const [deadline, setDeadline] = useState(null);
+  //上面的代码实现了将 Todo List 保存在本地 JSON 文件中以实现项目重启后可以保留上次状态。当todos状态变化时，将其保存到localStorage
+  const [input, setInput] = useState('');// 存储新待办事项的输入
+  const [deadline, setDeadline] = useState(null);// 存储新待办事项的截止日期
 
+  // 处理添加新待办事项的函数
   const handleAddTodo = () => {
     if (input && deadline) {
-      setTodos([...todos, { text: input, completed: false, deadline }]);
+      setTodos([...todos, { text: input, completed: false, deadline }]);// 添加新todo到列表
       setInput('');
       setDeadline(null);
     } else {
@@ -29,16 +30,18 @@ function TodoList() {
     }
   };
 
+  // 处理删除待办事项的函数
   const handleDeleteTodo = (index) => {
     const newTodos = [...todos];
-    newTodos.splice(index, 1);
-    setTodos(newTodos);
+    newTodos.splice(index, 1);// 删除指定索引的待办事项
+    setTodos(newTodos);// 更新待办事项列表
   };
 
+  // 处理切换待办事项完成状态的函数
   const handleToggleComplete = (index) => {
     const newTodos = [...todos];
-    newTodos[index].completed = !newTodos[index].completed;
-    setTodos(newTodos);
+    newTodos[index].completed = !newTodos[index].completed;// 切换完成状态
+    setTodos(newTodos);// 更新待办事项列表
   };
 
   return (
@@ -66,7 +69,7 @@ function TodoList() {
                 checked={todo.completed}
                 onChange={() => handleToggleComplete(index)}
               >
-                <div style={{ color: isOverdue ? 'red' : 'black' }}>
+                <div style={{ color: isOverdue ? 'red' : 'white' }}>
                   <span style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
                     {todo.text}
                   </span>
